@@ -29,46 +29,61 @@
 </section>
 
 <section class="container content-section">
+
+  <!-- Primary guidance -->
   <div style="text-align:center; margin-bottom:30px;">
-    <p>
-      For any questions use this chat and we will get back to you within 24 hours.
+    <p style="font-size:1.1rem;">
+      For the fastest response, use our secure live chat.
+      Your message will route directly to Endpoint Secure Consulting via GoDaddy Conversations.
     </p>
   </div>
 
-  <!-- Contact form acts as lead capture + chat trigger -->
-  <form class="contact-form" onsubmit="handleConsultationRequest(event)">
+  <!-- Optional lead capture form (visual only) -->
+  <form class="contact-form" onsubmit="event.preventDefault(); openReamazeChat();">
     <input 
       type="text" 
-      id="clientName" 
       placeholder="Your Name" 
       required
     >
 
     <input 
       type="email" 
-      id="clientEmail" 
       placeholder="Your Email" 
       required
     >
 
     <textarea 
-      id="clientMessage" 
       placeholder="Tell us about your endpoint security, Intune, or Zero Trust needs"
       rows="6"
       required
     ></textarea>
 
+    <!-- Main CTA -->
     <button type="submit" class="btn primary">
-      Start Secure Conversation
+      Chat With an Expert Now
     </button>
   </form>
 
+  <!-- Secondary CTA -->
   <div style="text-align:center; margin-top:20px;">
     <button type="button" class="btn secondary" onclick="openReamazeChat()">
-      Open Live Chat Directly
+      Open Live Chat
     </button>
   </div>
 
+  <!-- Fallback direct link -->
+  <p style="text-align:center; margin-top:20px;">
+    If chat doesn’t load,
+    <a 
+      href="https://conversations.godaddy.com/conversations/ba6a9e34-22c9-460c-a706-0b33aeb2ff05"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      click here to contact us directly
+    </a>.
+  </p>
+
+</section>
 
 <footer>
   <div class="container">
@@ -88,22 +103,20 @@
   src="https://cdn.reamaze.com/assets/reamaze-godaddy-loader.js">
 </script>
 
+<!-- GoDaddy / Reamaze Configuration -->
 <script type="text/javascript">
   var _support = _support || { ui: {}, user: {} };
 
   _support.account = "ba6a9e34-22c9-460c-a706-0b33aeb2ff05";
 
-  /* Core UI */
   _support.ui.contactMode = "default";
   _support.ui.enableKb = "false";
   _support.ui.mailbox = "80064145";
 
-  /* Branding */
   _support.ui.styles = {
     widgetColor: "#0b1f3a"
   };
 
-  /* Widget appearance */
   _support.ui.shoutboxFacesMode = "brand-avatar";
 
   _support.ui.widget = {
@@ -113,53 +126,34 @@
     label: {
       text: "Talk to Endpoint Secure Consulting",
       mode: "notification",
-      delay: 8
+      delay: 5
     }
   };
 
-  /* Confirmation */
   _support.ui.overrides = _support.ui.overrides || {};
   _support.ui.overrides.confirmationMessage =
     "Thanks! Your message has been submitted. Our Endpoint Secure Consulting team will respond here or via email shortly.";
 
-  /* Customer auth */
   _support.ui.user = {
     authpath: "/m/api/reamaze/v2/customers/auth?brand=39958707"
   };
 </script>
 
+<!-- Reliable Chat Open Logic -->
 <script>
-  /* Robust chat opener with retry + fallback */
-  function openReamazeChat(retries = 12) {
+  function openReamazeChat(retries = 15) {
     if (typeof Reamaze !== "undefined") {
       Reamaze("open");
     } else if (retries > 0) {
       setTimeout(function () {
         openReamazeChat(retries - 1);
-      }, 500);
+      }, 400);
     } else {
       window.open(
         "https://conversations.godaddy.com/conversations/ba6a9e34-22c9-460c-a706-0b33aeb2ff05",
         "_blank"
       );
     }
-  }
-
-  /* Form submission handler */
-  function handleConsultationRequest(event) {
-    event.preventDefault();
-
-    const name = document.getElementById("clientName").value.trim();
-    const email = document.getElementById("clientEmail").value.trim();
-    const message = document.getElementById("clientMessage").value.trim();
-
-    /* Optional local storage for lead context */
-    localStorage.setItem("esc_client_name", name);
-    localStorage.setItem("esc_client_email", email);
-    localStorage.setItem("esc_client_message", message);
-
-    /* Open GoDaddy / Reamaze chat */
-    openReamazeChat();
   }
 </script>
 
