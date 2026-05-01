@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Endpoint Secure Consulting</title>
+  <meta name="description" content="Connect with Endpoint Secure Consulting instantly.">
+  <link rel="stylesheet" href="styles.css">
 
   <!-- Cookie acceptance -->
   <script>
@@ -13,7 +15,6 @@
   <!-- GoDaddy / Reamaze -->
   <script async src="https://cdn.reamaze.com/assets/reamaze-godaddy-loader.js"></script>
 
-  <!-- Widget config -->
   <script>
     var _support = _support || { ui: {}, user: {} };
 
@@ -40,60 +41,76 @@
       }
     };
 
-    function autoOpenChat(retries = 40) {
-      /* Preferred: official API */
+    function autoStartChat(retries = 50) {
+      /* Open widget */
       if (typeof Reamaze !== "undefined") {
         try {
           Reamaze("open");
-          return;
         } catch (e) {}
       }
 
-      /* Fallback: click visible widget launcher */
-      const selectors = [
-        '.js-rezai-launcher',
-        '[aria-label*="chat"]',
-        '[aria-label*="message"]',
-        '[class*="reamaze-launcher"]',
-        '[class*="widget-launcher"]',
-        '[id*="reamaze"]'
-      ];
+      /* Click Send a Message */
+      setTimeout(function () {
+        const allElements = Array.from(document.querySelectorAll("button, a, div"));
 
-      for (let selector of selectors) {
-        const btn = document.querySelector(selector);
-        if (btn) {
-          btn.click();
+        const sendMessageBtn = allElements.find(el =>
+          el.innerText &&
+          el.innerText.trim().toLowerCase().includes("send a message")
+        );
+
+        if (sendMessageBtn) {
+          sendMessageBtn.click();
           return;
         }
-      }
 
-      /* Retry until widget fully loads */
-      if (retries > 0) {
-        setTimeout(function () {
-          autoOpenChat(retries - 1);
-        }, 500);
-      }
+        if (retries > 0) {
+          setTimeout(function () {
+            autoStartChat(retries - 1);
+          }, 500);
+        }
+
+      }, 1200);
     }
 
     window.onload = function () {
       setTimeout(function () {
-        autoOpenChat();
-      }, 1200);
+        autoStartChat();
+      }, 1500);
     };
   </script>
-
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: #ffffff;
-      overflow: hidden;
-    }
-  </style>
 </head>
 
 <body>
+
+<header class="navbar">
+  <div class="container nav-wrapper">
+    <div class="logo">Endpoint Secure Consulting</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-header">
+  <div class="container" style="text-align:center;">
+    <h1>Contact Endpoint Secure Consulting</h1>
+    <p>
+      We’ve opened secure chat for you automatically.
+    </p>
+    <p>
+      If it doesn’t appear immediately, use the chat window on the right.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Endpoint Secure Consulting. All rights reserved.</p>
+  </div>
+</footer>
+
 </body>
 </html>
