@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="2;url=index.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Endpoint Secure Consulting</title>
-  <meta name="description" content="Connect with Endpoint Secure Consulting instantly.">
+  <meta name="description" content="Launching secure chat with Endpoint Secure Consulting.">
   <link rel="stylesheet" href="styles.css">
 
   <!-- Cookie acceptance -->
@@ -41,62 +42,38 @@
       }
     };
 
-    function autoStartChat(retries = 60) {
-      /* Step 1: Try official API */
+    function forceOpenChat(retries = 80) {
+      /* Try API */
       if (typeof Reamaze !== "undefined") {
         try {
           Reamaze("open");
         } catch (e) {}
       }
 
-      /* Step 2: Force click launcher bubble */
-      const possibleLaunchers = [
-        '.js-rezai-launcher',
-        '[aria-label*="chat"]',
-        '[aria-label*="message"]',
-        '[class*="reamaze-launcher"]',
-        '[class*="widget-launcher"]',
-        '[id*="reamaze"]'
-      ];
+      /* Force launcher bubble click */
+      const launcher =
+        document.querySelector(".js-rezai-launcher") ||
+        document.querySelector('[aria-label*="chat"]') ||
+        document.querySelector('[aria-label*="message"]') ||
+        document.querySelector('[class*="reamaze"]');
 
-      for (let selector of possibleLaunchers) {
-        const launcher = document.querySelector(selector);
-
-        if (launcher) {
-          launcher.click();
-
-          /* Step 3: After widget opens, auto-click Send a Message */
-          setTimeout(function () {
-            const allElements = Array.from(
-              document.querySelectorAll("button, a, div, span")
-            );
-
-            const sendMessageBtn = allElements.find(el =>
-              el.innerText &&
-              el.innerText.trim().toLowerCase().includes("send a message")
-            );
-
-            if (sendMessageBtn) {
-              sendMessageBtn.click();
-            }
-          }, 1500);
-
-          return;
-        }
+      if (launcher) {
+        launcher.click();
       }
 
-      /* Retry until widget fully loads */
+      /* Keep trying until widget definitely opens */
       if (retries > 0) {
         setTimeout(function () {
-          autoStartChat(retries - 1);
-        }, 500);
+          forceOpenChat(retries - 1);
+        }, 300);
       }
     }
 
+    /* Open chat immediately */
     window.onload = function () {
       setTimeout(function () {
-        autoStartChat();
-      }, 2000);
+        forceOpenChat();
+      }, 1000);
     };
   </script>
 </head>
@@ -117,12 +94,12 @@
 
 <section class="page-header">
   <div class="container" style="text-align:center;">
-    <h1>Contact Endpoint Secure Consulting</h1>
+    <h1>Connecting You to Secure Support...</h1>
     <p>
-      We’ve opened secure chat for you automatically.
+      Our live support chat is launching now.
     </p>
     <p>
-      If it doesn’t appear immediately, use the chat window on the right.
+      If the chat window does not open automatically, please use the chat icon in the bottom-right corner.
     </p>
   </div>
 </section>
