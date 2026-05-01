@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="2;url=index.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Endpoint Secure Consulting</title>
   <meta name="description" content="Launching secure chat with Endpoint Secure Consulting.">
@@ -42,15 +41,15 @@
       }
     };
 
-    function forceOpenChat(retries = 80) {
-      /* Try API */
+    function forceOpenChat(retries = 100) {
+      /* Official API */
       if (typeof Reamaze !== "undefined") {
         try {
           Reamaze("open");
         } catch (e) {}
       }
 
-      /* Force launcher bubble click */
+      /* Click launcher bubble */
       const launcher =
         document.querySelector(".js-rezai-launcher") ||
         document.querySelector('[aria-label*="chat"]') ||
@@ -59,9 +58,27 @@
 
       if (launcher) {
         launcher.click();
+
+        /* After widget opens, click Send a Message */
+        setTimeout(function () {
+          const allEls = Array.from(
+            document.querySelectorAll("button, a, div, span")
+          );
+
+          const sendBtn = allEls.find(el =>
+            el.innerText &&
+            el.innerText.trim().toLowerCase().includes("send a message")
+          );
+
+          if (sendBtn) {
+            sendBtn.click();
+          }
+        }, 1500);
+
+        return;
       }
 
-      /* Keep trying until widget definitely opens */
+      /* Retry until widget is available */
       if (retries > 0) {
         setTimeout(function () {
           forceOpenChat(retries - 1);
@@ -69,11 +86,11 @@
       }
     }
 
-    /* Open chat immediately */
+    /* Launch automatically */
     window.onload = function () {
       setTimeout(function () {
         forceOpenChat();
-      }, 1000);
+      }, 1200);
     };
   </script>
 </head>
@@ -99,7 +116,7 @@
       Our live support chat is launching now.
     </p>
     <p>
-      If the chat window does not open automatically, please use the chat icon in the bottom-right corner.
+      If it does not appear immediately, please use the chat icon in the bottom-right corner.
     </p>
   </div>
 </section>
