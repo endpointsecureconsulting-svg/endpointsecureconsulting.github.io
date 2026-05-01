@@ -4,72 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Endpoint Secure Consulting</title>
-  <meta name="description" content="Connect instantly with Endpoint Secure Consulting through secure live chat.">
+  <meta name="description" content="Connect instantly with Endpoint Secure Consulting.">
   <link rel="stylesheet" href="styles.css">
-
-  <!-- Auto cookie acceptance -->
-  <script>
-    document.cookie = "cookie_terms_accepted=true; path=/; max-age=31536000";
-  </script>
-
-  <!-- GoDaddy / Reamaze -->
-  <script async src="https://cdn.reamaze.com/assets/reamaze-godaddy-loader.js"></script>
-
-  <script>
-    var _support = _support || { ui: {}, user: {} };
-
-    _support.account = "ba6a9e34-22c9-460c-a706-0b33aeb2ff05";
-
-    _support.ui.contactMode = "default";
-    _support.ui.enableKb = "false";
-    _support.ui.mailbox = "80064145";
-
-    _support.ui.styles = {
-      widgetColor: "#0b1f3a"
-    };
-
-    _support.ui.shoutboxFacesMode = "brand-avatar";
-
-    _support.ui.widget = {
-      icon: "webChat",
-      slug: "endpoint-secure-consulting",
-      position: "bottom-right",
-      label: {
-        text: "Talk to Endpoint Secure Consulting",
-        mode: "notification",
-        delay: 2
-      }
-    };
-
-    _support.ui.overrides = _support.ui.overrides || {};
-    _support.ui.overrides.confirmationMessage =
-      "Thanks! Our team will respond shortly.";
-
-    _support.ui.user = {
-      authpath: "/m/api/reamaze/v2/customers/auth?brand=39958707"
-    };
-
-    function openReamazeChat(retries = 20) {
-      if (typeof Reamaze !== "undefined") {
-        Reamaze("open");
-      } else if (retries > 0) {
-        setTimeout(function () {
-          openReamazeChat(retries - 1);
-        }, 500);
-      } else {
-        window.location.href =
-          "https://conversations.godaddy.com/conversations/ba6a9e34-22c9-460c-a706-0b33aeb2ff05";
-      }
-    }
-
-    window.onload = function () {
-      setTimeout(function () {
-        openReamazeChat();
-      }, 1500);
-    };
-  </script>
 </head>
-
 <body>
 
 <header class="navbar">
@@ -86,22 +23,19 @@
 
 <section class="page-header">
   <div class="container" style="text-align:center;">
-    <h1>Connecting You Securely...</h1>
+    <h1>Talk to Endpoint Secure Consulting</h1>
     <p>
-      We’re opening our secure consultation chat now.
+      Use our secure website chat for the fastest response.
     </p>
 
     <div style="margin-top:30px;">
-      <button class="btn primary" onclick="openReamazeChat()">
-        Open Chat Now
+      <button class="btn primary" onclick="openChatWidget()">
+        Open Secure Chat
       </button>
     </div>
 
     <p style="margin-top:20px;">
-      If chat does not open,
-      <a href="https://conversations.godaddy.com/conversations/ba6a9e34-22c9-460c-a706-0b33aeb2ff05">
-        click here
-      </a>.
+      The secure chat widget is also available in the bottom-right corner.
     </p>
   </div>
 </section>
@@ -111,6 +45,44 @@
     <p>© 2026 Endpoint Secure Consulting. All rights reserved.</p>
   </div>
 </footer>
+
+<!-- Cookie acceptance -->
+<script>
+  document.cookie = "cookie_terms_accepted=true; path=/; max-age=31536000";
+</script>
+
+<!-- GoDaddy / Reamaze -->
+<script async src="https://cdn.reamaze.com/assets/reamaze-godaddy-loader.js"></script>
+
+<script>
+  var _support = _support || { ui: {}, user: {} };
+
+  _support.account = "ba6a9e34-22c9-460c-a706-0b33aeb2ff05";
+
+  _support.ui.contactMode = "default";
+  _support.ui.enableKb = "false";
+  _support.ui.mailbox = "80064145";
+
+  _support.ui.styles = {
+    widgetColor: "#0b1f3a"
+  };
+
+  _support.ui.shoutboxFacesMode = "brand-avatar";
+
+  _support.ui.widget = {
+    icon: "webChat",
+    slug: "endpoint-secure-consulting",
+    position: "bottom-right",
+    label: {
+      text: "Talk to Endpoint Secure Consulting",
+      mode: "notification",
+      delay: 3
+    }
+  };
+</script>
+
+<!-- Shared script -->
+<script src="script.js"></script>
 
 </body>
 </html>
