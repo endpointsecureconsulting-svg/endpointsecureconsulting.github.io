@@ -4,12 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Endpoint Secure Consulting</title>
+  <meta name="description" content="Contact Endpoint Secure Consulting for endpoint security, Microsoft Intune consulting, Zero Trust, and managed services.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
 <header class="navbar">
   <div class="container nav-wrapper">
     <div class="logo">Endpoint Secure Consulting</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
   </div>
 </header>
 
@@ -21,18 +29,77 @@
 </section>
 
 <section class="container content-section">
-  <form class="contact-form">
-    <input type="text" placeholder="Your Name" required>
-    <input type="email" placeholder="Your Email" required>
-    <textarea placeholder="Your Security Needs"></textarea>
-    <button type="submit" class="btn primary">Submit</button>
+  <div style="text-align:center; margin-bottom:30px;">
+    <p>
+      For the fastest response, use our secure live chat. Your inquiry will route directly to Endpoint Secure Consulting via GoDaddy Conversations.
+    </p>
+  </div>
+
+  <!-- Contact form acts as lead capture + chat trigger -->
+  <form class="contact-form" onsubmit="handleConsultationRequest(event)">
+    <input 
+      type="text" 
+      id="clientName" 
+      placeholder="Your Name" 
+      required
+    >
+
+    <input 
+      type="email" 
+      id="clientEmail" 
+      placeholder="Your Email" 
+      required
+    >
+
+    <textarea 
+      id="clientMessage" 
+      placeholder="Tell us about your endpoint security, Intune, or Zero Trust needs"
+      rows="6"
+      required
+    ></textarea>
+
+    <button type="submit" class="btn primary">
+      Start Secure Conversation
+    </button>
   </form>
+
+  <div style="text-align:center; margin-top:20px;">
+    <button type="button" class="btn secondary" onclick="openReamazeChat()">
+      Open Live Chat Directly
+    </button>
+  </div>
+
+  <!-- Fallback -->
+  <p style="text-align:center; margin-top:20px;">
+    Chat not loading?
+    <a 
+      href="https://conversations.godaddy.com/conversations/ba6a9e34-22c9-460c-a706-0b33aeb2ff05" 
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Click here to contact us directly
+    </a>
+  </p>
 </section>
 
-<footer><div class="container"><p>© 2026 Endpoint Secure Consulting</p></div></footer>
-  <!-- PLACE THIS RIGHT BEFORE </body> ON EVERY PAGE (index.html, services.html, about.html, contact.html) -->
+<footer>
+  <div class="container">
+    <p>© 2026 Endpoint Secure Consulting. All rights reserved.</p>
+  </div>
+</footer>
 
-<script type="text/javascript" async src="https://cdn.reamaze.com/assets/reamaze-godaddy-loader.js"></script>
+<!-- Cookie acceptance required for GoDaddy / Reamaze -->
+<script>
+  document.cookie = "cookie_terms_accepted=true; path=/; max-age=31536000";
+</script>
+
+<!-- GoDaddy / Reamaze Loader -->
+<script 
+  type="text/javascript" 
+  async 
+  src="https://cdn.reamaze.com/assets/reamaze-godaddy-loader.js">
+</script>
+
 <script type="text/javascript">
   var _support = _support || { ui: {}, user: {} };
 
@@ -62,7 +129,7 @@
     }
   };
 
-  /* Custom confirmation */
+  /* Confirmation */
   _support.ui.overrides = _support.ui.overrides || {};
   _support.ui.overrides.confirmationMessage =
     "Thanks! Your message has been submitted. Our Endpoint Secure Consulting team will respond here or via email shortly.";
@@ -72,5 +139,41 @@
     authpath: "/m/api/reamaze/v2/customers/auth?brand=39958707"
   };
 </script>
+
+<script>
+  /* Robust chat opener with retry + fallback */
+  function openReamazeChat(retries = 12) {
+    if (typeof Reamaze !== "undefined") {
+      Reamaze("open");
+    } else if (retries > 0) {
+      setTimeout(function () {
+        openReamazeChat(retries - 1);
+      }, 500);
+    } else {
+      window.open(
+        "https://conversations.godaddy.com/conversations/ba6a9e34-22c9-460c-a706-0b33aeb2ff05",
+        "_blank"
+      );
+    }
+  }
+
+  /* Form submission handler */
+  function handleConsultationRequest(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("clientName").value.trim();
+    const email = document.getElementById("clientEmail").value.trim();
+    const message = document.getElementById("clientMessage").value.trim();
+
+    /* Optional local storage for lead context */
+    localStorage.setItem("esc_client_name", name);
+    localStorage.setItem("esc_client_email", email);
+    localStorage.setItem("esc_client_message", message);
+
+    /* Open GoDaddy / Reamaze chat */
+    openReamazeChat();
+  }
+</script>
+
 </body>
 </html>
