@@ -41,41 +41,62 @@
       }
     };
 
-    function autoStartChat(retries = 50) {
-      /* Open widget */
+    function autoStartChat(retries = 60) {
+      /* Step 1: Try official API */
       if (typeof Reamaze !== "undefined") {
         try {
           Reamaze("open");
         } catch (e) {}
       }
 
-      /* Click Send a Message */
-      setTimeout(function () {
-        const allElements = Array.from(document.querySelectorAll("button, a, div"));
+      /* Step 2: Force click launcher bubble */
+      const possibleLaunchers = [
+        '.js-rezai-launcher',
+        '[aria-label*="chat"]',
+        '[aria-label*="message"]',
+        '[class*="reamaze-launcher"]',
+        '[class*="widget-launcher"]',
+        '[id*="reamaze"]'
+      ];
 
-        const sendMessageBtn = allElements.find(el =>
-          el.innerText &&
-          el.innerText.trim().toLowerCase().includes("send a message")
-        );
+      for (let selector of possibleLaunchers) {
+        const launcher = document.querySelector(selector);
 
-        if (sendMessageBtn) {
-          sendMessageBtn.click();
+        if (launcher) {
+          launcher.click();
+
+          /* Step 3: After widget opens, auto-click Send a Message */
+          setTimeout(function () {
+            const allElements = Array.from(
+              document.querySelectorAll("button, a, div, span")
+            );
+
+            const sendMessageBtn = allElements.find(el =>
+              el.innerText &&
+              el.innerText.trim().toLowerCase().includes("send a message")
+            );
+
+            if (sendMessageBtn) {
+              sendMessageBtn.click();
+            }
+          }, 1500);
+
           return;
         }
+      }
 
-        if (retries > 0) {
-          setTimeout(function () {
-            autoStartChat(retries - 1);
-          }, 500);
-        }
-
-      }, 1200);
+      /* Retry until widget fully loads */
+      if (retries > 0) {
+        setTimeout(function () {
+          autoStartChat(retries - 1);
+        }, 500);
+      }
     }
 
     window.onload = function () {
       setTimeout(function () {
         autoStartChat();
-      }, 1500);
+      }, 2000);
     };
   </script>
 </head>
